@@ -27,9 +27,9 @@ export default function Navbar() {
         <div className="hidden md:flex items-center space-x-4">
           <FaSearch className="hover:text-orange-500 cursor-pointer" />
           <FaRegUser className="hover:text-orange-500 cursor-pointer" />
-         <button className="px-4 py-1.5 rounded-full bg-orange-500 text-sm text-black">
+         <Link href="/Login" className="px-4 py-1.5 rounded-full bg-orange-500 text-sm text-black">
   Login
-</button>
+</Link>
 
         </div>
 
@@ -54,9 +54,9 @@ export default function Navbar() {
               <FaSearch className="hover:text-orange-500 cursor-pointer" />
               <FaUser className="hover:text-orange-500 cursor-pointer" />
             </div>
-            <button className="px-4 py-1.5 rounded-full bg-orange-500 text-sm text-black">
+            <Link href={'/Login'} className="px-4 py-1.5 rounded-full bg-orange-500 text-sm text-black">
   Login
-</button>
+</Link>
 
           </div>
         </div>
