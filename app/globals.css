@@ -11,5 +11,27 @@
 
 body{
   font-family: 'Roboto', sans-serif;
+
  
 }
+/* Scrollbar styling for modern browsers */
+::-webkit-scrollbar {
+  width: 18px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(236, 156, 8);
+  border-radius: 10px;
+  border: 2px solid black;
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: orange black;
+}
+
