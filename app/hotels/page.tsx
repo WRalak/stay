@@ -1,38 +1,40 @@
-'use client'
+'use client';
 
 import { useState } from "react";
 import Link from "next/link";
-import rooms from "../data/rooms";
+import rooms from "../data/rooms"; // assuming data now includes county info as 'location'
 
-export default function Rooms() {
-  const [filterType, setFilterType] = useState("all");
+export default function Hotels() {
+  const [filterCounty, setFilterCounty] = useState("all");
   const [maxPrice, setMaxPrice] = useState("");
 
-  // Filter rooms based on selected type and max price
-  const filteredRooms = rooms.filter(room => {
-    const matchesType = filterType === "all" || room.type === filterType;
-    const matchesPrice = maxPrice === "" || room.pricePerNight <= Number(maxPrice);
-    return matchesType && matchesPrice;
+  // Filter hotels based on selected county and max price
+  const filteredHotels = rooms.filter(hotel => {
+    const matchesCounty = filterCounty === "all" || hotel.location === filterCounty;
+    const matchesPrice = maxPrice === "" || hotel.pricePerNight <= Number(maxPrice);
+    return matchesCounty && matchesPrice;
   });
 
-  // Get unique room types from data for the dropdown
-  const roomTypes = ["all", ...new Set(rooms.map(room => room.type))];
+  // Get unique counties for the dropdown
+  const counties = ["all", ...new Set(rooms.map(hotel => hotel.location))];
 
   return (
     <main className="container mx-auto py-16 px-6 md:px-10 xl:px-32 2xl:px-44">
-      <h1 className="text-2xl font-bold mb-3 text-center md:text-left">Hotel Rooms</h1>
-      <p className="text-[13px">Take advantage of our limited-time offers and special packages to enhance <br /> your stay and create unforgettable memories.</p>
+      <h1 className="text-2xl font-bold mb-3 text-center md:text-left">Hotels in Kenya</h1>
+      <p className="text-[13px]">
+        Explore the best hotel deals across counties in Kenya. Filter by county and price to find your ideal stay.
+      </p>
 
       {/* Filters */}
       <div className="flex flex-col py-6 sm:flex-row gap-4 mb-10 items-center justify-center md:justify-start">
         <select
-          value={filterType}
-          onChange={e => setFilterType(e.target.value)}
+          value={filterCounty}
+          onChange={e => setFilterCounty(e.target.value)}
           className="border rounded px-3 py-2"
         >
-          {roomTypes.map(type => (
-            <option key={type} value={type}>
-              {type === "all" ? "All Types" : type.charAt(0).toUpperCase() + type.slice(1)}
+          {counties.map(county => (
+            <option key={county} value={county}>
+              {county === "all" ? "All Counties" : county}
             </option>
           ))}
         </select>
@@ -47,25 +49,26 @@ export default function Rooms() {
         />
       </div>
 
-      {/* Rooms Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {filteredRooms.length === 0 ? (
-          <p className="col-span-full text-center text-gray-600">No rooms match your criteria.</p>
+      {/* Hotels Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5 gap-8">
+        {filteredHotels.length === 0 ? (
+          <p className="col-span-full text-center text-gray-600">No hotels match your criteria.</p>
         ) : (
-          filteredRooms.map(room => (
+          filteredHotels.map(hotel => (
             <Link
-              key={room.id}
-              href={`/rooms/${room.id}`}
-              className="block rounded-lg overflow-hidden "
+              key={hotel.id}
+              href={`/rooms/${hotel.id}`}
+              className="block rounded-lg overflow-hidden"
             >
               <img
-                src={room.imageUrl}
-                alt={room.name}
+                src={hotel.imageUrl}
+                alt={hotel.hotelName}
                 className="w-full h-48 object-cover"
               />
               <div className="p-1 bg-white">
-                <h2 className="font-semibold text-lg mb-1">{room.name}</h2>
-                <p className="text-gray-700">${room.pricePerNight} / night</p>
+                <h2 className="font-semibold text-lg mb-1">{hotel.hotelName}</h2>
+                <p className="text-sm text-gray-500">{hotel.location}</p>
+                <p className="text-gray-700">Ksh {hotel.pricePerNight} / night</p>
               </div>
             </Link>
           ))
@@ -74,3 +77,4 @@ export default function Rooms() {
     </main>
   );
 }
+
